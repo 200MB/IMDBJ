@@ -10,6 +10,6 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args) throws IOException {
         IMDBJ api = new IMDBJ();
-        api.searchTitles("lego");
+        api.searchByKeywords(new String[]{"avengers","tony-stark"});
     }
 }

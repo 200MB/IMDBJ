@@ -7,7 +7,14 @@
     <groupId>org.example</groupId>
     <artifactId>IMDBJ</artifactId>
     <version>1.0-SNAPSHOT</version>
+  <dependencies>
+      <dependency>
+          <groupId>org.jsoup</groupId>
+          <artifactId>jsoup</artifactId>
+          <version>1.14.2</version>
+      </dependency>
 
+  </dependencies>
     <properties>
         <maven.compiler.source>16</maven.compiler.source>
         <maven.compiler.target>16</maven.compiler.target>

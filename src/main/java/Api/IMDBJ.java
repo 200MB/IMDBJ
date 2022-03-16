@@ -6,6 +6,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class IMDBJ {
     private String link;
@@ -23,6 +24,10 @@ public class IMDBJ {
     public void searchCelebs(String name) throws IOException {
         link = SearchStrings.CELEBS.formatted(name);
         search();
+    }
+
+    public void searchByKeywords(String[] args) {
+
     }
 
     private void search() throws IOException {
