@@ -2,6 +2,7 @@ package Api;
 
 import Model.SearchCeleb;
 import Model.SearchTitle;
+import Model.SearchTvTitle;
 import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -29,13 +30,13 @@ public class IMDBJ {
 
     }
 
-    public ArrayList<SearchTitle> searchTvTitles(String name, int limit) throws IOException {
+    public ArrayList<SearchTvTitle> searchTvTitles(String name, int limit) throws IOException {
         link = SearchStrings.TVEP.formatted(name);
-        ArrayList<SearchTitle> tempList = new ArrayList<>();
+        ArrayList<SearchTvTitle> tempList = new ArrayList<>();
         getlinks(limit);
         System.out.println("Parsing...");
         for (Document doc : linkArrList) {
-            tempList.add(Parser.parseToTitle(doc, false));
+            tempList.add(Parser.parseToTv(doc));
         }
         System.out.println("Ready!");
         return tempList;
