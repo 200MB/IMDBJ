@@ -2,6 +2,7 @@ package Api;
 
 import Model.SearchCeleb;
 import Model.SearchTitle;
+import Model.SearchTvTitle;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -18,7 +19,7 @@ public class Parser {
         Elements title = doc.select("h1[data-testid=hero-title-block__title]");
         Elements year = doc.select("span[class=sc-52284603-2 iTRONr]");
         Elements ageRating = doc.select("span[class=sc-52284603-2 iTRONr]");
-        Elements duration = doc.select("ul[class=ipc-inline-list ipc-inline-list--show-dividers sc-52284603-0 blbaZJ baseAlt]");
+        Elements duration = doc.select("ul[class=ipc-inline-list ipc-inline-list--show-dividers sc-52284603-0 blbaZJ baseAlt] li");
         Elements imdbRating = doc.select("div[class=sc-7ab21ed2-2 kYEdvH] span[class=sc-7ab21ed2-1 jGRxWM]");
         Elements metaScore = doc.select("span[class=score-meta]");
         Elements popularity = doc.select("div[class=sc-edc76a2-1 gopMqI]");
@@ -39,11 +40,53 @@ public class Parser {
         arrElements.add(director);
         arrElements.add(writers);
 
-
         return setInstance(arrElements, intance, ignore);
     }
 
+    public static SearchTvTitle parseToTv(Document doc) {
+        SearchTitle ins = parseToTitle(doc,false);
+        return new SearchTvTitle(ins.getTitle(),ins.getYear(), ins.getAgeRating(), ins.getDuration(), ins.getImdbRating(),ins.getPopularity(),ins.getDirector(),ins.getWriters());
+    }
+
     private static SearchTitle setInstance(ArrayList<Elements> arrElements, SearchTitle instance, Boolean ignore) {
+        int ind = 1;
+        for (Elements i : arrElements) {
+            if (i.size() == 0 && ignore) {
+                return null;
+            }
+            if (ind == 4){
+                try{
+                    instance.setDuration(i.get(3).text());
+                    ind++;
+                    continue;
+                }
+                catch (IndexOutOfBoundsException e){
+                    instance.setDuration("Undefined");
+                    ind++;
+                    continue;
+                }
+            }
+            if (ind == 3) {
+                if (i.size() > 1) {
+                    instance.setAgeRating(i.get(1).text());
+                    ind++;
+                    continue;
+                } else {
+                    instance.setAgeRating("Undefined");
+                    ind++;
+                    continue;
+                }
+            }
+            if (i.size() != 0) {
+                instance.setWhat(ind, Arrays.asList(i.get(0).text()));
+            }
+            ind++;
+        }
+
+        return instance;
+    }
+
+    private static SearchTvTitle setInstanceForTv(ArrayList<Elements> arrElements, SearchTvTitle instance, Boolean ignore) {
         int ind = 1;
         for (Elements i : arrElements) {
             if (i.size() == 0 && ignore) {
@@ -65,6 +108,7 @@ public class Parser {
             }
             ind++;
         }
+
         return instance;
     }
 
