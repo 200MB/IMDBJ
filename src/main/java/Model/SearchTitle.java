@@ -7,7 +7,7 @@ public class SearchTitle {
     private String title;
     private String year;
     private String ageRating;
-    private int duration; //in minutes
+    private String duration; //in minutes
     private double imdbRating;
     private int metaScore;
     private String popularity;
@@ -26,7 +26,7 @@ public class SearchTitle {
         this.ageRating = ageRating;
     }
 
-    public void setDuration(int duration) {
+    public void setDuration(String duration) {
         this.duration = duration;
     }
 
@@ -62,7 +62,7 @@ public class SearchTitle {
         return ageRating;
     }
 
-    public int getDuration() {
+    public String getDuration() {
         return duration;
     }
 
@@ -87,7 +87,7 @@ public class SearchTitle {
     }
 
     public void setWhat(int i, List<?> list) {
-        switch(i){
+        switch (i) {
             case 1:
                 setTitle(String.valueOf(list.get(0)));
                 break;
@@ -98,8 +98,7 @@ public class SearchTitle {
                 setAgeRating(String.valueOf(list.get(0)));
                 break;
             case 4:
-                //setDuration(Integer.valueOf(String.valueOf(list.get(0))));
-                setDuration(1);
+                setDuration((String.valueOf(list.get(0))));
                 break;
             case 5:
                 setImdbRating(Double.parseDouble(String.valueOf(list.get(0))));
@@ -117,6 +116,7 @@ public class SearchTitle {
         }
     }
 
+
     @Override
     public String toString() {
         return "SearchTitle{" +
@@ -131,4 +131,6 @@ public class SearchTitle {
                 ", writers=" + writers +
                 '}';
     }
+
+
 }
