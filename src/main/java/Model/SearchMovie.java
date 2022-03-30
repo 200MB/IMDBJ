@@ -3,7 +3,7 @@ package Model;
 import java.util.LinkedHashSet;
 import java.util.List;
 
-public class SearchTitle {
+public class SearchMovie {
     private String title;
     private String year;
     private String ageRating;
@@ -88,38 +88,21 @@ public class SearchTitle {
 
     public void setWhat(int i, List<?> list) {
         switch (i) {
-            case 1:
-                setTitle(String.valueOf(list.get(0)));
-                break;
-            case 2:
-                setYear((String.valueOf(list.get(0))));
-                break;
-            case 3:
-                setAgeRating(String.valueOf(list.get(0)));
-                break;
-            case 4:
-                setDuration((String.valueOf(list.get(0))));
-                break;
-            case 5:
-                setImdbRating(Double.parseDouble(String.valueOf(list.get(0))));
-                break;
-            case 6:
-                setMetaScore(Integer.valueOf(String.valueOf(list.get(0))));
-                break;
-            case 7:
-                setPopularity((String.valueOf(list.get(0))));
-                break;
-            case 8:
-                setDirector(String.valueOf(list.get(0)));
-                break;
-
+            case 1 -> setTitle(String.valueOf(list.get(0)));
+            case 2 -> setYear((String.valueOf(list.get(0))));
+            case 3 -> setAgeRating(String.valueOf(list.get(0)));
+            case 4 -> setDuration((String.valueOf(list.get(0))));
+            case 5 -> setImdbRating(Double.parseDouble(String.valueOf(list.get(0))));
+            case 6 -> setMetaScore(Integer.parseInt(String.valueOf(list.get(0))));
+            case 7 -> setPopularity((String.valueOf(list.get(0))));
+            case 8 -> setDirector(String.valueOf(list.get(0)));
         }
     }
 
 
     @Override
     public String toString() {
-        return "SearchTitle{" +
+        return "SearchMovie{" +
                 "title='" + title + '\'' +
                 ", year=" + year +
                 ", ageRating=" + ageRating +
