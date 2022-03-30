@@ -1,20 +1,19 @@
 package Api;
 
 import Model.SearchCeleb;
-import Model.SearchTitle;
+import Model.SearchMovie;
 import Model.SearchTvTitle;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import javax.print.Doc;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 
 public class Parser {
-    protected static SearchTitle parseToTitle(Document doc, Boolean ignore) {
-        SearchTitle intance = new SearchTitle();
+    protected static SearchMovie parseToMovie(Document doc, Boolean ignore) {
+        SearchMovie intance = new SearchMovie();
         ArrayList<Elements> arrElements = new ArrayList<>();
         Elements title = doc.select("h1[data-testid=hero-title-block__title]");
         Elements year = doc.select("span[class=sc-52284603-2 iTRONr]");
@@ -44,24 +43,28 @@ public class Parser {
     }
 
     public static SearchTvTitle parseToTv(Document doc) {
-        SearchTitle ins = parseToTitle(doc,false);
+        SearchMovie ins = parseToMovie(doc,false);
         return new SearchTvTitle(ins.getTitle(),ins.getYear(), ins.getAgeRating(), ins.getDuration(), ins.getImdbRating(),ins.getPopularity(),ins.getDirector(),ins.getWriters());
     }
 
-    private static SearchTitle setInstance(ArrayList<Elements> arrElements, SearchTitle instance, Boolean ignore) {
+    private static SearchMovie setInstance(ArrayList<Elements> arrElements, SearchMovie instance, Boolean ignore) {
         int ind = 1;
         for (Elements i : arrElements) {
+            int durationIndex = 2;
             if (i.size() == 0 && ignore) {
                 return null;
             }
             if (ind == 4){
                 try{
-                    instance.setDuration(i.get(3).text());
+                    if (i.size() > 3){
+                        durationIndex = 3;
+                    }
+                    instance.setDuration(i.get(durationIndex).text());
                     ind++;
                     continue;
                 }
                 catch (IndexOutOfBoundsException e){
-                    instance.setDuration("Undefined");
+                    instance.setDuration(null);
                     ind++;
                     continue;
                 }
@@ -72,7 +75,7 @@ public class Parser {
                     ind++;
                     continue;
                 } else {
-                    instance.setAgeRating("Undefined");
+                    instance.setAgeRating(null);
                     ind++;
                     continue;
                 }
@@ -98,7 +101,7 @@ public class Parser {
                     ind++;
                     continue;
                 } else {
-                    instance.setAgeRating("Undefined");
+                    instance.setAgeRating(null);
                     ind++;
                     continue;
                 }
