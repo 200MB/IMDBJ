@@ -1,5 +1,6 @@
 package Model;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 
@@ -8,10 +9,11 @@ public class SearchTvTitle {
     private String year;
     private String ageRating;
     private String duration; //in minutes
-    private double imdbRating;
+    private Double imdbRating;
     private String popularity;
     private String director;
     private LinkedHashSet<String> writers;
+
 
     public SearchTvTitle(String title, String year, String ageRating, String duration, double imdbRating, String popularity, String director, LinkedHashSet<String> writers) {
         this.title = title;
@@ -52,42 +54,6 @@ public class SearchTvTitle {
         this.director = director;
     }
 
-    public void setWriters(LinkedHashSet<String> writers) {
-        this.writers = writers;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getYear() {
-        return year;
-    }
-
-    public String getAgeRating() {
-        return ageRating;
-    }
-
-    public String getDuration() {
-        return duration;
-    }
-
-    public double getImdbRating() {
-        return imdbRating;
-    }
-
-    public String getPopularity() {
-        return popularity;
-    }
-
-    public String getDirector() {
-        return director;
-    }
-
-    public LinkedHashSet<String> getWriters() {
-        return writers;
-    }
-
     public void setWhat(int i, List<?> list) {
         switch (i) {
             case 1:
@@ -115,9 +81,10 @@ public class SearchTvTitle {
         }
     }
 
+
     @Override
     public String toString() {
-        return "SearchTitle{" +
+        return "SearchMovie{" +
                 "title='" + title + '\'' +
                 ", year=" + year +
                 ", ageRating=" + ageRating +
