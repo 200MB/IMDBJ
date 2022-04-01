@@ -9,6 +9,7 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedHashSet;
 
 public class Parser {
@@ -59,6 +60,9 @@ public class Parser {
                     if (i.size() > 3){
                         durationIndex = 3;
                     }
+                    if (i.size() < 3){
+                        durationIndex = 1;
+                    }
                     instance.setDuration(i.get(durationIndex).text());
                     ind++;
                     continue;
@@ -107,7 +111,7 @@ public class Parser {
                 }
             }
             if (i.size() != 0) {
-                instance.setWhat(ind, Arrays.asList(i.get(0).text()));
+                instance.setWhat(ind, Collections.singletonList(i.get(0).text()));
             }
             ind++;
         }
@@ -116,7 +120,7 @@ public class Parser {
     }
 
 
-    protected static SearchCeleb parseToCeleb(Document doc, boolean ignore) {
+    protected static SearchCeleb parseToCeleb(Document doc) {
         SearchCeleb instance = new SearchCeleb();
         Elements professions = doc.select("div[class=infobar] a[href]");
         Elements birthYear = doc.select("time[datetime]");
@@ -137,7 +141,7 @@ public class Parser {
         arrElements.add(birthCountry);
 
 
-        return setInstanceOfCeleb(instance, arrElements, ignore);
+        return setInstanceOfCeleb(instance, arrElements, true);
     }
 
     private static SearchCeleb setInstanceOfCeleb(SearchCeleb instance, ArrayList<Elements> arrElements, boolean ignore) {
