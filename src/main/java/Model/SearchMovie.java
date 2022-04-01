@@ -7,7 +7,7 @@ public class SearchMovie {
     private String title;
     private String year;
     private String ageRating;
-    private String duration; //in minutes
+    private String duration;
     private double imdbRating;
     private int metaScore;
     private String popularity;
