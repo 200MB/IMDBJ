@@ -8,8 +8,8 @@ public class SearchMovie {
     private String year;
     private String ageRating;
     private String duration;
-    private double imdbRating;
-    private int metaScore;
+    private String imdbRating;
+    private String metaScore;
     private String popularity;
     private String director;
     private LinkedHashSet<String> writers;
@@ -30,11 +30,11 @@ public class SearchMovie {
         this.duration = duration;
     }
 
-    public void setImdbRating(double imdbRating) {
+    public void setImdbRating(String imdbRating) {
         this.imdbRating = imdbRating;
     }
 
-    public void setMetaScore(int metaScore) {
+    public void setMetaScore(String metaScore) {
         this.metaScore = metaScore;
     }
 
@@ -66,11 +66,11 @@ public class SearchMovie {
         return duration;
     }
 
-    public double getImdbRating() {
+    public String getImdbRating() {
         return imdbRating;
     }
 
-    public int getMetaScore() {
+    public String getMetaScore() {
         return metaScore;
     }
 
@@ -86,18 +86,7 @@ public class SearchMovie {
         return writers;
     }
 
-    public void setWhat(int i, List<?> list) {
-        switch (i) {
-            case 1 -> setTitle(String.valueOf(list.get(0)));
-            case 2 -> setYear((String.valueOf(list.get(0))));
-            case 3 -> setAgeRating(String.valueOf(list.get(0)));
-            case 4 -> setDuration((String.valueOf(list.get(0))));
-            case 5 -> setImdbRating(Double.parseDouble(String.valueOf(list.get(0))));
-            case 6 -> setMetaScore(Integer.parseInt(String.valueOf(list.get(0))));
-            case 7 -> setPopularity((String.valueOf(list.get(0))));
-            case 8 -> setDirector(String.valueOf(list.get(0)));
-        }
-    }
+
 
 
     @Override

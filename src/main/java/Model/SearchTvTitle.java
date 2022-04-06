@@ -1,21 +1,19 @@
 package Model;
 
-import java.util.ArrayList;
 import java.util.LinkedHashSet;
-import java.util.List;
 
 public class SearchTvTitle {
     private String title;
     private String year;
     private String ageRating;
     private String duration; //in minutes
-    private Double imdbRating;
+    private String imdbRating;
     private String popularity;
     private String director;
     private LinkedHashSet<String> writers;
 
 
-    public SearchTvTitle(String title, String year, String ageRating, String duration, double imdbRating, String popularity, String director, LinkedHashSet<String> writers) {
+    public SearchTvTitle(String title, String year, String ageRating, String duration, String imdbRating, String popularity, String director, LinkedHashSet<String> writers) {
         this.title = title;
         this.year = year;
         this.ageRating = ageRating;
@@ -42,7 +40,7 @@ public class SearchTvTitle {
         this.duration = duration;
     }
 
-    public void setImdbRating(double imdbRating) {
+    public void setImdbRating(String imdbRating) {
         this.imdbRating = imdbRating;
     }
 
@@ -52,33 +50,6 @@ public class SearchTvTitle {
 
     public void setDirector(String director) {
         this.director = director;
-    }
-
-    public void setWhat(int i, List<?> list) {
-        switch (i) {
-            case 1:
-                setTitle(String.valueOf(list.get(0)));
-                break;
-            case 2:
-                setYear((String.valueOf(list.get(0))));
-                break;
-            case 3:
-                setAgeRating(String.valueOf(list.get(0)));
-                break;
-            case 4:
-                setDuration((String.valueOf(list.get(0))));
-                break;
-            case 5:
-                setImdbRating(Double.parseDouble(String.valueOf(list.get(0))));
-                break;
-            case 6:
-                setPopularity((String.valueOf(list.get(0))));
-                break;
-            case 7:
-                setDirector(String.valueOf(list.get(0)));
-                break;
-
-        }
     }
 
 
