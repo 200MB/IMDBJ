@@ -3,6 +3,7 @@ package Api;
 import Enums.ElementStringModifier;
 import Enums.Genre;
 import Enums.SearchStrings;
+import Model.MixedSearch;
 import Model.SearchCeleb;
 import Model.SearchMovie;
 import Model.SearchTvTitle;
@@ -25,9 +26,8 @@ public class IMDBJ {
     private boolean ignoreLimit;
 
     /**
-     *
-     * @param name keyword for movie titles
-     * @param limit amount to extract (everything above 20th search is usually just an undocumented page)
+     * @param name   keyword for movie titles
+     * @param limit  amount to extract (everything above 20th search is usually just an undocumented page)
      * @param ignore if the scrapper should ignore the movie page that doesn't have every info to set class fields
      * @return information about each movie
      * @throws IOException
@@ -38,7 +38,7 @@ public class IMDBJ {
         getlinks(limit, ElementStringModifier.MOVIE);
         System.out.println("Parsing...");
         for (Document doc : linkArrList) {
-            tempList.add(Parser.parseToMovie(doc, ignore));
+            tempList.add(Parser.parseToMovie(doc));
         }
         System.out.println("Ready!");
         return tempList;
@@ -46,8 +46,7 @@ public class IMDBJ {
     }
 
     /**
-     *
-     * @param name keyword for the TvShow titles
+     * @param name  keyword for the TvShow titles
      * @param limit amount to extract
      * @return information about each Tv show
      * @throws IOException
@@ -65,8 +64,7 @@ public class IMDBJ {
     }
 
     /**
-     *
-     * @param name keyword for celeb names
+     * @param name  keyword for celeb names
      * @param limit amount to extract (everything above 10th search is usually just an undocumented page)
      * @return (limit) amount of celebrity information
      * @throws IOException
@@ -86,7 +84,6 @@ public class IMDBJ {
     }
 
     /**
-     *
      * @param limit amount to extract (can't exceed 250)
      * @return information about (limit) amount of titles from top 250 movies
      * @throws IOException
@@ -100,13 +97,13 @@ public class IMDBJ {
         getlinks(limit, ElementStringModifier.TOP250);
         System.out.println("Parsing...");
         for (Document doc : linkArrList) {
-            tempList.add(Parser.parseToMovie(doc, false));
+            tempList.add(Parser.parseToMovie(doc));
         }
         System.out.println("Ready!");
         return tempList;
     }
+
     /**
-     *
      * @param limit amount to extract (can't exceed 250)
      * @return information about (limit) amount of titles from top 250 Tv Shows
      * @throws IOException
@@ -126,8 +123,8 @@ public class IMDBJ {
         return tempList;
 
     }
+
     /**
-     *
      * @param limit amount to extract (can't exceed 100)
      * @return information about (limit) amount of titles from most Popular Movies
      * @throws IOException
@@ -141,13 +138,13 @@ public class IMDBJ {
         getlinks(limit, ElementStringModifier.TOP250);
         System.out.println("Parsing...");
         for (Document doc : linkArrList) {
-            tempList.add(Parser.parseToMovie(doc, false));
+            tempList.add(Parser.parseToMovie(doc));
         }
         System.out.println("Ready!");
         return tempList;
     }
+
     /**
-     *
      * @param limit amount to extract (can't exceed 100)
      * @return information about (limit) amount of titles from most popular Tv Shows
      * @throws IOException
@@ -168,7 +165,6 @@ public class IMDBJ {
     }
 
     /**
-     *
      * @param genre movie genre
      * @param limit amount to extract (can't exceed 50)
      * @return information about (limit) amount of titles from top50Movies By genre
@@ -183,18 +179,16 @@ public class IMDBJ {
         getlinks(limit, ElementStringModifier.TOP50_GENRE);
         System.out.println("Parsing...");
         for (Document doc : linkArrList) {
-            tempList.add(Parser.parseToMovie(doc, false));
+            tempList.add(Parser.parseToMovie(doc));
         }
         System.out.println("Ready!");
         return tempList;
     }
 
     /**
-     *
      * @param genre genre
      * @param limit amount to extract (can't exceed 50)
      * @return information about (limit) amount of titles from top50TvShows By genre
-     * @throws IOException
      */
     public ArrayList<SearchTvTitle> getTop50TvShowsByGenre(Genre genre, int limit) throws IOException {
         if (limit > 50) {
@@ -213,10 +207,8 @@ public class IMDBJ {
 
 
     /**
-     *
-     * @param limit amount to extract
+     * @param limit    amount to extract
      * @param modifier tells code which cssquery to scrap after loading a page
-     * @throws IOException
      */
     private void getlinks(int limit, ElementStringModifier modifier) throws IOException {
         ignoreLimit = false;
@@ -257,12 +249,9 @@ public class IMDBJ {
     }
 
     /**
-     *
      * @param month month
      * @param limit amount to extract
      * @return movies that will come out in (month)
-     * @throws IOException
-     * @throws ParseException
      */
     public ArrayList<SearchMovie> comingSoon(Month month, int limit) throws IOException, ParseException {
         String format;
@@ -274,11 +263,25 @@ public class IMDBJ {
         getlinks(limit, ElementStringModifier.COMING_SOON);
         System.out.println("Parsing...");
         for (Document doc : linkArrList) {
-            tempList.add(Parser.parseToMovie(doc, false));
+            tempList.add(Parser.parseToMovie(doc));
         }
         System.out.println("Ready!");
         return tempList;
     }
+
+//    public MixedSearch fanFavourites(int limit) throws IOException {
+//        link = SearchStrings.FAN_FAVOURITES;
+//        getlinks(limit, ElementStringModifier.FAN_FAVOURITES);
+//        System.out.println("Parsing...");
+//        MixedSearch instance = new MixedSearch();
+//        for (Document doc : linkArrList) {
+//             if (Parser.isMovie(doc)) instance.getMovies().add(Parser.parseToMovie(doc));
+//             else instance.getTv().add(Parser.parseToTv(doc));
+//        }
+//        System.out.println("Ready!");
+//        return instance;
+//
+//    }
 
     private Calendar setTime(Month month) throws ParseException {
         Date date = new SimpleDateFormat("MMMM", Locale.ENGLISH).parse(month.name());
@@ -293,6 +296,7 @@ public class IMDBJ {
             case MOVIE, CELEBS -> doc.select("table[class=findList] td[class=result_text] a");
             case COMING_SOON -> doc.select("td[class=overview-top] h4 a");
             case TOP50_GENRE -> doc.select("div[class=lister-item-content] h3 a");
+            default -> null;
         };
     }
 
