@@ -6,5 +6,6 @@ public enum ElementStringModifier {
     CELEBS,
     MOVIE,
     COMING_SOON,
-    TOP50_GENRE
+    TOP50_GENRE,
+    FAN_FAVOURITES
 }
