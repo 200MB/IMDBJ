@@ -11,7 +11,6 @@ import java.util.jar.JarEntry;
 
 
 public class Main {
-    //TODO: IMDBJ has methods that have similar algorithms needs to be more generic and requires optimizations
     public static void main(String[] args) throws IOException, ParseException, InterruptedException {
         IMDBJ api = new IMDBJ();
 
